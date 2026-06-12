@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNE – Banco Nacional da Escorvânia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <h1>BNE</h1>
+      <p>Banco Nacional da Escorvânia</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- LOGIN -->
+    <section id="loginCard" class="card">
+      <h2>Entrar</h2>
+      <div class="form-group">
+        <label for="loginConta">Número da conta</label>
+        <input id="loginConta" type="text" placeholder="Ex: FI.2025.3">
+      </div>
+      <div class="form-group">
+        <label for="loginSenha">Senha</label>
+        <input id="loginSenha" type="password" placeholder="Senha">
+      </div>
+      <div id="loginErro" class="msg-erro" hidden></div>
+      <button onclick="login()" class="btn btn-primary">Entrar</button>
+    </section>
+
+    <!-- PAINEL CLIENTE -->
+    <div id="clientePanel" hidden>
+
+      <div class="toolbar">
+        <span id="clienteNome" class="toolbar-nome"></span>
+        <button onclick="logout()" class="btn btn-ghost">Sair</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-label">Saldo</span>
+          <span id="saldoAtual" class="stat-value">Ry$ 0,00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Empréstimo em aberto</span>
+          <span id="emprestimoAtual" class="stat-value stat-secondary">—</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Transferir</h2>
+        <div class="form-group">
+          <label for="destino">Conta de destino</label>
+          <input id="destino" type="text" placeholder="Ex: GO.2025.2">
+        </div>
+        <div class="form-group">
+          <label for="valorTransferencia">Valor (Ry$)</label>
+          <input id="valorTransferencia" type="number" min="0.01" step="0.01" placeholder="0,00">
+        </div>
+        <div id="transferenciaErro" class="msg-erro" hidden></div>
+        <button onclick="transferir()" class="btn btn-primary">Confirmar transferência</button>
+      </div>
+
+      <div class="card">
+        <h2>Histórico</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Operação</th>
+              <th class="col-valor">Valor</th>
+            </tr>
+          </thead>
+          <tbody id="historicoTabela">
+            <tr><td colspan="3" class="vazio">Nenhuma movimentação.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- PAINEL ADMIN -->
+    <div id="adminPanel" hidden>
+
+      <div class="toolbar">
+        <span class="toolbar-nome">Administrador BNE</span>
+        <button onclick="logout()" class="btn btn-ghost">Sair</button>
+      </div>
+
+      <!-- Dashboard resumo -->
+      <div class="stats-row" id="dashboardStats"></div>
+
+      <!-- Criar conta -->
+      <div class="card">
+        <h2>Criar conta</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tipoConta">Tipo</label>
+            <select id="tipoConta">
+              <option value="fisica">Física</option>
+              <option value="empresarial">Empresarial</option>
+              <option value="governamental">Governamental</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nomeConta">Nome</label>
+            <input id="nomeConta" type="text" placeholder="Nome do titular">
+          </div>
+          <div class="form-group">
+            <label for="senhaConta">Senha</label>
+            <input id="senhaConta" type="password" placeholder="Senha inicial">
+          </div>
+          <div class="form-group">
+            <label for="saldoConta">Saldo inicial (Ry$)</label>
+            <input id="saldoConta" type="number" min="0" step="0.01" placeholder="0,00">
+          </div>
+        </div>
+        <button onclick="criarConta()" class="btn btn-primary">Criar conta</button>
+      </div>
+
+      <!-- Lista de contas -->
+      <div class="card">
+        <div class="card-header-row">
+          <h2>Contas cadastradas</h2>
+          <button onclick="carregarAdmin()" class="btn btn-ghost btn-sm">Atualizar</button>
+        </div>
+        <div class="form-group" style="max-width:280px">
+          <input id="buscaConta" type="text" placeholder="Buscar por nome ou número..." oninput="filtrarContas()">
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Conta</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th class="col-valor">Saldo</th>
+              <th class="col-valor">Empréstimo</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="listaContas">
+            <tr><td colspan="6" class="vazio">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Editar conta -->
+      <div class="card">
+        <h2>Editar conta</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editarNumero">Número da conta</label>
+            <input id="editarNumero" type="text" placeholder="Ex: FI.2025.3">
+          </div>
+          <div class="form-group">
+            <label for="novoNome">Novo nome <span class="opcional">(opcional)</span></label>
+            <input id="novoNome" type="text" placeholder="Deixe em branco para manter">
+          </div>
+          <div class="form-group">
+            <label for="novaSenha">Nova senha <span class="opcional">(opcional)</span></label>
+            <input id="novaSenha" type="password" placeholder="Deixe em branco para manter">
+          </div>
+        </div>
+        <button onclick="editarConta()" class="btn btn-secondary">Salvar alterações</button>
+      </div>
+
+      <!-- Transferência admin -->
+      <div class="card">
+        <h2>Transferência administrativa</h2>
+        <p class="card-desc">Move saldo entre quaisquer contas sem restrição de limite.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="origemAdmin">Conta origem</label>
+            <input id="origemAdmin" type="text" placeholder="Ex: FI.2025.3">
+          </div>
+          <div class="form-group">
+            <label for="destinoAdmin">Conta destino</label>
+            <input id="destinoAdmin" type="text" placeholder="Ex: GO.2025.2">
+          </div>
+          <div class="form-group">
+            <label for="valorAdmin">Valor (Ry$)</label>
+            <input id="valorAdmin" type="number" min="0.01" step="0.01" placeholder="0,00">
+          </div>
+        </div>
+        <button onclick="transferenciaAdmin()" class="btn btn-primary">Transferir</button>
+      </div>
+
+      <!-- Emitir / Queimar moeda -->
+      <div class="card">
+        <h2>Emitir / Queimar moeda</h2>
+        <p class="card-desc">Cria ou remove Ry$ de circulação diretamente em uma conta.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contaEmissao">Conta</label>
+            <input id="contaEmissao" type="text" placeholder="Ex: FI.2025.3">
+          </div>
+          <div class="form-group">
+            <label for="valorEmissao">Valor (Ry$)</label>
+            <input id="valorEmissao" type="number" min="0.01" step="0.01" placeholder="0,00">
+          </div>
+          <div class="form-group">
+            <label for="tipoEmissao">Operação</label>
+            <select id="tipoEmissao">
+              <option value="emitir">Emitir (adicionar)</option>
+              <option value="queimar">Queimar (remover)</option>
+            </select>
+          </div>
+        </div>
+        <button onclick="emitirMoeda()" class="btn btn-secondary">Executar</button>
+      </div>
+
+      <!-- Empréstimo -->
+      <div class="card">
+        <h2>Conceder empréstimo</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contaEmprestimo">Conta</label>
+            <input id="contaEmprestimo" type="text" placeholder="Ex: FI.2025.3">
+          </div>
+          <div class="form-group">
+            <label for="valorEmprestimo">Valor (Ry$)</label>
+            <input id="valorEmprestimo" type="number" min="0.01" step="0.01" placeholder="0,00">
+          </div>
+        </div>
+        <button onclick="concederEmprestimo()" class="btn btn-primary">Conceder</button>
+      </div>
+
+      <!-- Quitar empréstimo -->
+      <div class="card">
+        <h2>Quitar empréstimo</h2>
+        <div class="form-group" style="max-width:280px">
+          <label for="contaQuitar">Conta</label>
+          <input id="contaQuitar" type="text" placeholder="Ex: FI.2025.3">
+        </div>
+        <button onclick="quitarEmprestimo()" class="btn btn-secondary">Quitar</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Modal de confirmação -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal">
+      <p id="modalMensagem"></p>
+      <div class="modal-acoes">
+        <button id="modalConfirmar" class="btn btn-primary">Confirmar</button>
+        <button onclick="fecharModal()" class="btn btn-ghost">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

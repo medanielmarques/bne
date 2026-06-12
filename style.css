@@ -1,0 +1,347 @@
+/* =============================================
+   BNE – Banco Nacional da Escorvânia
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --verde:       #0b3d2e;
+  --verde-hover: #145c46;
+  --verde-claro: #e8f2ee;
+  --texto:       #1a1a1a;
+  --texto-sec:   #555;
+  --borda:       #d5dde0;
+  --fundo:       #f0f2f5;
+  --card:        #fff;
+  --erro:        #c0392b;
+  --erro-bg:     #fdf0ef;
+  --positivo:    #1a7a4a;
+  --negativo:    #c0392b;
+  --radius:      8px;
+  --sombra:      0 1px 4px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---- Header ---- */
+header {
+  background: var(--verde);
+  color: #fff;
+  padding: 18px 24px;
+}
+
+.header-inner h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.header-inner p {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* ---- Layout ---- */
+main {
+  max-width: 860px;
+  margin: 32px auto;
+  padding: 0 20px 60px;
+}
+
+/* ---- Toolbar ---- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.toolbar-nome {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* ---- Stats ---- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-sec);
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--verde);
+}
+
+.stat-secondary {
+  color: var(--negativo);
+}
+
+/* ---- Cards ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--verde);
+  margin-bottom: 16px;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-header-row h2 {
+  margin-bottom: 0;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--texto-sec);
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
+/* ---- Formulários ---- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--texto-sec);
+}
+
+.opcional {
+  font-weight: 400;
+  font-style: italic;
+  color: #999;
+}
+
+input, select {
+  padding: 9px 12px;
+  border: 1px solid var(--borda);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--texto);
+  background: #fff;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--verde);
+}
+
+/* ---- Botões ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--verde);
+  color: #fff;
+  margin-top: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--verde-hover);
+}
+
+.btn-secondary {
+  background: var(--verde-claro);
+  color: var(--verde);
+  margin-top: 8px;
+}
+
+.btn-secondary:hover {
+  background: #d0e8df;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--texto-sec);
+  border: 1px solid var(--borda);
+}
+
+.btn-ghost:hover {
+  background: var(--fundo);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--negativo);
+  border: 1px solid #f0c0bc;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.btn-danger:hover {
+  background: var(--erro-bg);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  margin-top: 0;
+}
+
+/* ---- Tabelas ---- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+th {
+  background: var(--verde);
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+th:first-child { border-radius: var(--radius) 0 0 0; }
+th:last-child  { border-radius: 0 var(--radius) 0 0; }
+
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--borda);
+  color: var(--texto);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f7faf9; }
+
+.col-valor { text-align: right; }
+
+.vazio {
+  text-align: center;
+  color: var(--texto-sec);
+  padding: 24px;
+  font-size: 13px;
+}
+
+.valor-positivo { color: var(--positivo); font-weight: 600; }
+.valor-negativo { color: var(--negativo); font-weight: 600; }
+
+/* ---- Mensagens ---- */
+.msg-erro {
+  background: var(--erro-bg);
+  color: var(--erro);
+  border: 1px solid #f0c0bc;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* ---- Modal ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  display: none;
+}
+
+.modal-overlay.visivel {
+  display: flex;
+}
+
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  max-width: 380px;
+  width: 90%;
+}
+
+.modal p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.modal-acoes {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---- Responsivo ---- */
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

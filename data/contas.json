@@ -1,0 +1,11 @@
+[
+  {
+    "numero": "AD.2025.1",
+    "nome": "Administrador BNE",
+    "senha": "admin123",
+    "tipo": "admin",
+    "saldo": 0,
+    "historico": [],
+    "emprestimo": { "ativo": false, "valor": 0 }
+  }
+]
